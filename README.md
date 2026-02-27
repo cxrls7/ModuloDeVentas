@@ -43,9 +43,35 @@ Desarrollar una aplicación sencilla que permita:
 - `main` → versión estable  
 - `develop` → integración de funcionalidades  
 - `feature/*` → desarrollo de nuevas funcionalidades  
-- `bug/*` → corrección de errores  
+- `test/*` → prueba del programa
 
 ---
+
+## 🧪 Ejecutar pruebas
+
+Desde la raíz del proyecto ejecutar:
+
+```bash
+python -m unittest discover
+```
+
+Para ejecutar un archivo específico:
+
+```bash
+python -m unittest tests/test_validacion.py
+```
+
+---
+
+## ✔️ Estado del proyecto
+
+- Tests implementados
+- Arquitectura por features
+- Separación de responsabilidades
+- Buenas prácticas aplicadas
+
+---
+
 
 ## 🛠 Tecnologías
   
