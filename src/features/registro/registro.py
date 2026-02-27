@@ -3,7 +3,7 @@
 #Importe tambien la clase venta para crear objetos de venta y almacenar los detalles de cada transacción
 
 
-from src.models.ventas import ventas
+from src.models.ventas import Venta
 from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
 
 
