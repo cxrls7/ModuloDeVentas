@@ -1,3 +1,8 @@
+#Este módulo se encarga de registrar las ventas, calcular el subtotal, descuento y total final, y mostrar un resumen de la venta
+#Importe las funciones necesarias para el registro de ventas y los cálculos relacionados
+#Importe tambien la clase venta para crear objetos de venta y almacenar los detalles de cada transacción
+
+
 from src.models.ventas import ventas
 from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
 

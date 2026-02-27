@@ -1,3 +1,6 @@
+# Archivo principal del sistema de registro de ventas diarias
+# Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
+
 from src.features.registro.registro import registrar_venta
 import os
 
