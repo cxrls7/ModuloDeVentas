@@ -1,3 +1,6 @@
+#Defini funciones para calcular el subtotal, descuento y total final.
+
+
 def calcular_subtotal(precio, cantidad):
     return round(precio * cantidad, 2)
 def calcular_descuento_vip(subtotal, es_vip):

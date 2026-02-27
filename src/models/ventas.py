@@ -1,3 +1,7 @@
+#Definir la clase Venta con los atributos producto, cantidad, precio_unitario, es_vip, subtotal, descuento y total. 
+# El método __init__ debe inicializar estas variables y calcular el subtotal, descuento y total utilizando las funciones definidas en validacion.py.
+
+
 class Venta:
     def __init__(self, producto, cantidad, precio_unitario, es_vip):
         self.producto = producto
