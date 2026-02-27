@@ -2,7 +2,7 @@
 #Importare como en el de validacion solo las funciones necesarias para las pruebas, no todo el programa.
 
 import unittest
-from src.models.ventas import ventas
+from src.models.ventas import Venta
 
 
 class TestRegistro(unittest.TestCase):
