@@ -8,7 +8,7 @@ from src.models.ventas import Venta
 class TestRegistro(unittest.TestCase):
 
     def test_creacion_venta(self):
-        venta = venta("Camisa", 2, 25.0, True)
+        venta = Venta("Camisa", 2, 25.0, True)
 
         self.assertEqual(venta.producto, "Camisa")
         self.assertEqual(venta.cantidad, 2)
