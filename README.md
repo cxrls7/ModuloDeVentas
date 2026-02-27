@@ -52,13 +52,13 @@ Desarrollar una aplicación sencilla que permita:
 Desde la raíz del proyecto ejecutar:
 
 ```bash
-python -m unittest discover
+python3 -m unittest discover
 ```
 
 Para ejecutar un archivo específico:
 
 ```bash
-python -m unittest tests/test_validacion.py
+python3 -m unittest tests/test_validacion.py
 ```
 
 ---
