@@ -86,6 +86,14 @@ python3 -m unittest tests/test_validacion.py
 
 ---
 
+## ▶ Ejecutar programa
+
+```bash
+python3 -m src.main
+```
+
+---
+
 ## AUTHOR
 
 - Carlos Daniel Molina Ordoñez.
