@@ -1,6 +1,6 @@
 # Archivo principal del sistema de registro de ventas diarias
 # Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
-
+from src.features.historial.historial import mostrar_historial
 from src.features.registro.registro import registrar_venta
 import os
 
@@ -33,7 +33,8 @@ def mostrar_menu():
     print("\nMENU PRINCIPAL")
     linea()
     print("1. Registrar una venta")
-    print("2. Salir")
+    print("2. Ver historial de ventas")
+    print("3. Salir")
     linea() 
 
 
@@ -57,6 +58,9 @@ def main():
             registrar_venta()
             input("\nPresione Enter para volver al menu")
             limpiar_pantalla()
+        
+        elif opcion == "2":
+            mostrar_historial()
 
         elif opcion == "2":
                  despedida()
