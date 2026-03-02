@@ -5,6 +5,7 @@
 
 from src.models.ventas import Venta
 from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
+from src.services.almacenamiento import guardar_venta
 
 
 def registrar_venta():
@@ -14,10 +15,10 @@ def registrar_venta():
         cantidad = int(input("Ingrese la cantidad:"))
         precio = float(input("Ingrese el precio unitario:"))
     except ValueError:
-        print("Error‼️: Debe ingresar valores numericos validos.")
+        print("Error‼️ : Debe ingresar valores numericos validos.")
         return
     if cantidad <= 0 or precio <= 0:
-        print("Error‼️: La cantidad y el precio deben ser mayores a 0.")
+        print("Error‼️ : La cantidad y el precio deben ser mayores a 0.")
         return 
     
     while True:
@@ -26,10 +27,10 @@ def registrar_venta():
             es_vip = vip_input == "si"
             break
         else:
-            print("Error‼️: Por favor ingrese 'si' o 'no'.")
+            print("Error‼️ : Por favor ingrese 'si' o 'no'.")
 
     venta = Venta(producto, cantidad, precio, es_vip)
-
+    guardar_venta(venta.__dict__)  # Guardar la venta como un diccionario en el archivo JSON
     venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
     venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
     venta.total = calcular_total_final(venta.subtotal, venta.descuento)
