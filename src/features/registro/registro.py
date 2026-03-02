@@ -22,7 +22,7 @@ def registrar_venta():
         return 
     
     while True:
-        vip_input = input("¿El cliente es VIP? si/no)").strip().lower()
+        vip_input = input("¿El cliente es VIP? si/no): ").strip().lower()
         if vip_input in ["si", "no"]:
             es_vip = vip_input == "si"
             break

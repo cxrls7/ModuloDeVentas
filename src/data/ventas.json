@@ -16,5 +16,14 @@
         "subtotal": 0,
         "descuento": 0,
         "total": 0
+    },
+    {
+        "producto": "camisa",
+        "cantidad": 2,
+        "precio_unitario": 23000.0,
+        "es_vip": true,
+        "subtotal": 46000.0,
+        "descuento": 4600.0,
+        "total": 41400.0
     }
 ]
