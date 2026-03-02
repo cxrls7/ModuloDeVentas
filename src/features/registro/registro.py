@@ -2,7 +2,7 @@
 #Importe las funciones necesarias para el registro de ventas y los cálculos relacionados
 #Importe tambien la clase venta para crear objetos de venta y almacenar los detalles de cada transacción
 
-
+from src.services.almacenamiento import guardar_venta
 from src.models.ventas import Venta
 from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
 
@@ -28,7 +28,8 @@ def registrar_venta():
         else:
             print("Error‼️: Por favor ingrese 'si' o 'no'.")
 
-    venta = venta(producto, cantidad, precio, es_vip)
+    venta = Venta(producto, cantidad, precio, es_vip)
+    guardar_venta(venta.__dict__)
 
     venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
     venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
