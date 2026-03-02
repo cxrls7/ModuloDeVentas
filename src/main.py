@@ -25,7 +25,7 @@ def mostrar_bienvenida():
     print("Producta: Camisa")
     print("Cantidad: 3")
     print("Precio unitario: $25.000")
-    print("¿El cliente es VIP? si/no")
+    print("¿El cliente es VIP? si/no: ")
     linea()
 
 

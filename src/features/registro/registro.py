@@ -28,7 +28,7 @@ def registrar_venta():
         else:
             print("Error‼️: Por favor ingrese 'si' o 'no'.")
 
-    venta = venta(producto, cantidad, precio, es_vip)
+    venta = Venta(producto, cantidad, precio, es_vip)
 
     venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
     venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
