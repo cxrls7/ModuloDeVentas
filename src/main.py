@@ -67,7 +67,7 @@ def main():
 
            
 
-        elif opcion == "2":
+        elif opcion == "3":
                  despedida()
                  break
         else:
