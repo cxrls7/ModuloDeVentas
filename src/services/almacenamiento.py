@@ -17,9 +17,11 @@ def obtener_ventas():
     
 
 def guardar_venta(venta_dict):
+    print("Venta que se va a guardar:", venta_dict)
     "Guarda una nueva venta en el archivo JSON."
     ventas = obtener_ventas()
     ventas.append(venta_dict)
+    print("Ventas actuales:", ventas)
 
     with open(RUTA_ARCHIVO, "w") as archivo:
         json.dump(ventas, archivo, indent=4)
