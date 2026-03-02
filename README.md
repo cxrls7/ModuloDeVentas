@@ -82,7 +82,7 @@ python3 -m unittest tests/test_validacion.py
 ---
 ## Requerimientos
 
-- Tener instaladom python 3 para la ejecucion optima del programa.
+- Tener instaladon python 3 para la ejecucion optima del programa.
 
 ---
 
