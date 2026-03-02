@@ -60,7 +60,12 @@ def main():
             limpiar_pantalla()
         
         elif opcion == "2":
+            limpiar_pantalla()
             mostrar_historial()
+            input("\nPresione Enter para volver al menu")
+            limpiar_pantalla()
+
+           
 
         elif opcion == "2":
                  despedida()
