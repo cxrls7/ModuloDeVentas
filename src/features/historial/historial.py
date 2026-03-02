@@ -21,7 +21,7 @@ def mostrar_historial():
             print(f"{clave}: {valor}")
 
         # Suponiendo que tienes cantidad y precio
-        subtotal = venta["cantidad"] * venta["precio"]
+        subtotal = venta["cantidad"] * venta["precio_unitario"]
         total_general += subtotal
         total_productos += venta["cantidad"]
 
