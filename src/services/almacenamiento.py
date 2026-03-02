@@ -1,8 +1,8 @@
 import json
 import os
 
-RUTA_ARCHIVO = os.path.join(os.path.dirname(__file__),"../data/ventas.json")
-print("Ruta del archivo:", os.path.abspath(RUTA_ARCHIVO))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RUTA_ARCHIVO = os.path.join(BASE_DIR, "data", "ventas.json")
 def obtener_ventas():
     "Devuelve la lista de ventas guardadas. Si el archivo no existe o esta vacio, devuelve una lista vacia."
     if not os.path.exists(RUTA_ARCHIVO):
