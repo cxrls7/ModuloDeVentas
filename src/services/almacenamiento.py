@@ -4,9 +4,10 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUTA_ARCHIVO = os.path.join(BASE_DIR, "data", "ventas.json")
 def obtener_ventas():
-    "Devuelve la lista de ventas guardadas. Si el archivo no existe o esta vacio, devuelve una lista vacia."
+    print("Leyendo archivo en:", RUTA_ARCHIVO)
+
     if not os.path.exists(RUTA_ARCHIVO):
-       return[]
+        return []
 
     try:
         with open(RUTA_ARCHIVO, "r") as archivo:
