@@ -3,7 +3,7 @@ import mysql.connector
 def obtener_conexion():
     return mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="TU_PASSWORD",
+        user="ventas_user",
+        password="Carlos1050*",
         database="modulo_ventas"
     )
