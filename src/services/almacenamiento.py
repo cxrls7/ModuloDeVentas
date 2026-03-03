@@ -1,7 +1,7 @@
-from src.database.conexion import obtener_conexion
+from src.database.conexion_mysql import obtener_conexion
 
 
-def guardar_venta_db(venta):
+def guardar_venta_mysql(venta):
     conexion = obtener_conexion()
     cursor = conexion.cursor()
     
