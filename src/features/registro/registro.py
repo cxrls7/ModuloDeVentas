@@ -29,7 +29,7 @@ def registrar_venta():
             print("Error‼️ : Por favor ingrese 'si' o 'no'.")
 
     venta = Venta(producto, cantidad, precio, es_vip)
-    guardar_venta_db(venta.__dict__)  # Guardar la venta como un diccionario en el archivo JSON
+    guardar_venta_db(venta)  # Guardar la venta como un diccionario en el archivo JSON
     venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
     venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
     venta.total = calcular_total_final(venta.subtotal, venta.descuento)
