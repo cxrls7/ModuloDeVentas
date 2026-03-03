@@ -38,17 +38,17 @@ def registrar_venta():
 
 
 def mostrar_resumen_venta(venta):
-    print("\n" + "-" * 60) 
-    print ("             RESUMEN DE LA VENTA")
-    print("-" * 60) 
+    print("\n" + "-" * 60)
+    print("             RESUMEN DE LA VENTA")
+    print("-" * 60)
     print(f"Producto        : {venta.producto}")
     print(f"Cantidad        : {venta.cantidad}")
-    print(f"Precio Unitario : ${venta.precio_unitario:.2f}") 
+    print(f"Precio Unitario : {formatear_moneda(venta.precio_unitario)}")
     print("-" * 60)
-    print(f"Subtotal        : ${venta.subtotal:.2f}")
-    print(f"Descuento VIP   : ${venta.descuento:.2f}")
+    print(f"Subtotal        : {formatear_moneda(venta.subtotal)}")
+    print(f"Descuento VIP   : {formatear_moneda(venta.descuento)}")
     print("-" * 60)
-    print(f"TOTAL A PAGAR   : ${venta.total:.2f}")
+    print(f"TOTAL A PAGAR   : {formatear_moneda(venta.total)}")
     print("-" * 60)
 
           
