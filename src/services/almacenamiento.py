@@ -29,7 +29,7 @@ def obtener_ventas():
     ventas = []
 
     for fila in filas:
-        venta = Venta(
+        venta = venta(
             producto=fila[1],
             cantidad=fila[2],
             precio_unitario=fila[3],
