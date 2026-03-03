@@ -1,8 +1,12 @@
 # Archivo principal del sistema de registro de ventas diarias
 # Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
+from src.database.conexion import crear_tabla
 from src.features.historial.historial import mostrar_historial
 from src.features.registro.registro import registrar_venta
 import os
+
+if __name__ == "__main__":
+    crear_tabla()  
 
 
 def limpiar_pantalla():

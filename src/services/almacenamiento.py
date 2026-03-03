@@ -1,25 +1,46 @@
-import json
-import os
+from src.database.conexion import obtener_conexion
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RUTA_ARCHIVO = os.path.join(BASE_DIR, "data", "ventas.json")
 
+def guardar_venta_db(venta):
+    conexion = obtener_conexion()
+    cursor = conexion.cursor()
+    
+    cursor.execute("""
+        INSERT INTO ventas (producto, cantidad, precio_unitario, es_vip, subtotal, descuento, total)
+        VALUES (?, ?, ?, ?, ?, ?, ?) """, (
+           venta.producto,
+           venta.cantidad,
+           venta.precio_unitario,
+           venta.es_vip,
+           venta.subtotal,
+           venta.descuento,
+           venta.total
+        ))
+    conexion.commit()
+    conexion.close()
 
 def obtener_ventas():
-    if not os.path.exists(RUTA_ARCHIVO):
-        return []
+    conexion = obtener_conexion()
+    cursor = conexion.cursor()
 
-    with open(RUTA_ARCHIVO, "r") as archivo:
-        try:
-            return json.load(archivo)
-        except json.JSONDecodeError:
-            return []
+    cursor.execute("SELECT * FROM ventas")
+    filas = cursor.fetchall()
 
+    ventas = []
 
-def guardar_venta(venta_dict):
-    ventas = obtener_ventas()  # Cargar ventas existentes
+    for fila in filas:
+        venta = Venta(
+            producto=fila[1],
+            cantidad=fila[2],
+            precio_unitario=fila[3],
+            es_vip=bool(fila[4]),
+            subtotal=fila[5],
+            descuento=fila[6],
+            total=fila[7]
+        )
+        ventas.append(venta)
+        
+    conexion.close()
 
-    ventas.append(venta_dict)  # Agregar nueva venta
+    return ventas
 
-    with open(RUTA_ARCHIVO, "w") as archivo:
-        json.dump(ventas, archivo, indent=4)
