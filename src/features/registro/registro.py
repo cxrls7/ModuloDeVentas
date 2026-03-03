@@ -2,7 +2,7 @@
 #Importe las funciones necesarias para el registro de ventas y los cálculos relacionados
 #Importe tambien la clase venta para crear objetos de venta y almacenar los detalles de cada transacción
 
-
+from src.utils.formato import formatear_moneda
 from src.models.ventas import Venta
 from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
 from src.services.almacenamiento import guardar_venta_db
