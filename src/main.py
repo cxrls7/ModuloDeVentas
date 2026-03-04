@@ -43,9 +43,9 @@ def linea():
 def mostrar_bienvenida():
     limpiar_pantalla()
     linea()
-    print("      --- SISTEMA DE GESTIÓN INTELIGENTE ---")
+    print("      --- SISTEMA DE GESTIÓN DE VENTAS ---")
     linea()
-    print("Bienvenido 👋 ")
+    print("Bienvenido, al sistema de gestion de ventas, registra ventas y obten un analisis claro y preciso de cada una de ellas. 👋 ")
     linea()
 
 def mostrar_menu():
