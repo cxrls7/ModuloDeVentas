@@ -1,18 +1,18 @@
 # Archivo principal del sistema de registro de ventas diarias
 # Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
 import os
-
 from src.database.conexion_mysql import obtener_conexion 
 from src.features.registro.registro import registrar_venta
-
 from src.features.historial.historial import mostrar_historial
+from src.database.queries import obtener_dashboard_trabajador
+from src.utils.decorators import manejador_global
 
 def crear_tabla_si_no_existe():
- 
     conexion = obtener_conexion()
     if conexion:
         try:
             cursor = conexion.cursor()
+            # Actualizado para incluir las columnas de la IA
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS ventas (
                     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,6 +23,9 @@ def crear_tabla_si_no_existe():
                     subtotal DECIMAL(12, 2),
                     descuento DECIMAL(12, 2),
                     total DECIMAL(12, 2),
+                    categoria VARCHAR(50),
+                    eslogan_ia TEXT,
+                    feedback_interno TEXT,
                     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """)
@@ -32,7 +35,6 @@ def crear_tabla_si_no_existe():
             conexion.close()
 
 def limpiar_pantalla():
-   
     os.system("clear" if os.name == "posix" else "cls") 
 
 def linea():
@@ -41,22 +43,39 @@ def linea():
 def mostrar_bienvenida():
     limpiar_pantalla()
     linea()
-    print("      --- SISTEMA DE REGISTRO DE VENTAS ---")
+    print("      --- SISTEMA DE GESTIÓN INTELIGENTE ---")
     linea()
-    print("Bienvenido 👋")
-    print("Registra ventas añadiendo descuentos para clientes VIP y consulta el historial de las ventas")
+    print("Bienvenido 👋 - Ahora potenciado con IA Studio")
     linea()
 
 def mostrar_menu():
     print("\n📦 MENU PRINCIPAL")
     linea()
-    print("1. 📝 Registrar una venta")
+    print("1. 📝 Registrar una venta (Con análisis de IA)")
     print("2. 📜 Ver historial de ventas (MySQL)")
-    print("3. 🚪 Salir")
+    print("3. 📊 Panel de Control: Ganancias (Trabajador)")
+    print("4. 🚪 Salir")
     linea() 
 
+
+def ejecutar_dashboard():
+    limpiar_pantalla()
+    print(">>> PANEL DE CONTROL DEL TRABAJADOR")
+    linea()
+    
+    ventas_hoy, ganancia_hoy = obtener_dashboard_trabajador()
+    
+    
+    total_dinero = ganancia_hoy if ganancia_hoy else 0.0
+    
+    print(f"📈 Ventas realizadas hoy: {ventas_hoy}")
+    print(f"💰 Recaudación total:     ${total_dinero:.2f}")
+    linea()
+    print("Consejo: Revisa el log de errores si notas discrepancias.")
+    input("\n✅ Presione Enter para volver al menú...")
+    limpiar_pantalla()
+
 def main(): 
-    # 1. Verificamos la base de datos antes de empezar
     crear_tabla_si_no_existe()
     mostrar_bienvenida()
 
@@ -68,7 +87,8 @@ def main():
             limpiar_pantalla()
             print(">>> REGISTRO DE NUEVA VENTA")
             linea()
-            registrar_venta() # Esta función ahora guarda en MySQL internamente
+          
+            registrar_venta() 
             input("\n✅ Presione Enter para volver al menú...")
             limpiar_pantalla()
         
@@ -81,6 +101,9 @@ def main():
             limpiar_pantalla()
 
         elif opcion == "3":
+            ejecutar_dashboard()
+
+        elif opcion == "4":
             linea()
             print("Gracias por utilizar el sistema. ¡Sesión finalizada! ✅")
             linea()
@@ -90,5 +113,4 @@ def main():
 
 if __name__ == "__main__":
      main()
-     
      
