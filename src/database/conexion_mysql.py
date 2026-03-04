@@ -4,8 +4,8 @@ def obtener_conexion():
     try:
         config = {
             'host': 'localhost',
-            'user': 'root', 
-            'password': 'root1234',
+            'user': 'carlos', 
+            'password': 'Carlos1050',
             'database': 'modulo_ventas'
         }
         conexion = mysql.connector.connect(**config)
