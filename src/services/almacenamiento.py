@@ -43,24 +43,23 @@ def obtener_ventas():
 
         ventas = []
         for fila in filas:
-           
+            
             v = Venta(
                 producto=fila[1],
                 cantidad=fila[2],
                 precio_unitario=fila[3],
-                es_vip=bool(fila[4])
+                es_vip=bool(fila[4]),
+                subtotal=fila[5],   
+                descuento=fila[6],  
+                total=fila[7]       
             )
-          
-            v.subtotal = fila[5]
-            v.descuento = fila[6]
-            v.total = fila[7]
             ventas.append(v)
         
         return ventas
     except Exception as e:
-        print(f"❌ Error al obtener ventas: {e}")
+        
+        print(f"❌ Error al obtener ventas de la DB: {e}")
         return []
     finally:
         cursor.close()
         conexion.close()
-
