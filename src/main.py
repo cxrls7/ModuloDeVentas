@@ -45,15 +45,15 @@ def mostrar_bienvenida():
     linea()
     print("      --- SISTEMA DE GESTIÓN INTELIGENTE ---")
     linea()
-    print("Bienvenido 👋 - Ahora potenciado con IA Studio")
+    print("Bienvenido 👋 ")
     linea()
 
 def mostrar_menu():
     print("\n📦 MENU PRINCIPAL")
     linea()
-    print("1. 📝 Registrar una venta (Con análisis de IA)")
+    print("1. 📝 Registrar una venta ")
     print("2. 📜 Ver historial de ventas (MySQL)")
-    print("3. 📊 Panel de Control: Ganancias (Trabajador)")
+    print("3. 📊 Panel de Control")
     print("4. 🚪 Salir")
     linea() 
 
