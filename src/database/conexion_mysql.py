@@ -1,9 +1,15 @@
 import mysql.connector
 
 def obtener_conexion():
-    return mysql.connector.connect(
-        host="localhost",
-        user="ventas_user",
-        password="Carlos1050*",
-        database="modulo_ventas"
-    )
+    try:
+        config = {
+            'host': 'localhost',
+            'user': 'root', 
+            'password': 'root1234',
+            'database': 'modulo_ventas'
+        }
+        conexion = mysql.connector.connect(**config)
+        return conexion
+    except mysql.connector.Error as err:
+        print(f"❌ Error de conexión: {err}")
+        return None

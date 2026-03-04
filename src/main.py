@@ -1,81 +1,92 @@
 # Archivo principal del sistema de registro de ventas diarias
 # Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
-from src.database.conexion import crear_tabla
-from src.features.historial.historial import mostrar_historial
-from src.features.registro.registro import registrar_venta
 import os
 
-if __name__ == "__main__":
-    crear_tabla()  
+from src.database.conexion_mysql import obtener_conexion 
+from src.features.registro.registro import registrar_venta
 
+from src.features.historial.historial import mostrar_historial
+
+def crear_tabla_si_no_existe():
+ 
+    conexion = obtener_conexion()
+    if conexion:
+        try:
+            cursor = conexion.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS ventas (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    producto VARCHAR(100) NOT NULL,
+                    cantidad INT NOT NULL,
+                    precio_unitario DECIMAL(12, 2) NOT NULL,
+                    es_vip BOOLEAN DEFAULT FALSE,
+                    subtotal DECIMAL(12, 2),
+                    descuento DECIMAL(12, 2),
+                    total DECIMAL(12, 2),
+                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conexion.commit()
+        finally:
+            cursor.close()
+            conexion.close()
 
 def limpiar_pantalla():
-    os.system("clear") 
+   
+    os.system("clear" if os.name == "posix" else "cls") 
 
 def linea():
     print("=" * 60)
 
-
 def mostrar_bienvenida():
+    limpiar_pantalla()
     linea()
-    print("---SISTEMA DE REGISTRO DE VENTAS DIARIAS---")
+    print("      --- SISTEMA DE REGISTRO DE VENTAS ---")
     linea()
     print("Bienvenido 👋")
-    print("Este sitema permite registrar las ventas diarias de tu negocio de manera sencilla y eficiente.")
-    print("Podrás ingresar los detalles de cada venta, calcular descuentos para clientes VIP")
-    print("y obtener un resumen claro de cada transacción.")
+    print("Registra ventas añadiendo descuentos para clientes VIP y consulta el historial de las ventas")
     linea()
-    print("EJEMPLO DE USO:")
-    print("Producta: Camisa")
-    print("Cantidad: 3")
-    print("Precio unitario: $25.000")
-    print("¿El cliente es VIP? si/no: ")
-    linea()
-
 
 def mostrar_menu():
-    print("\nMENU PRINCIPAL")
+    print("\n📦 MENU PRINCIPAL")
     linea()
-    print("1. Registrar una venta")
-    print("2. Ver historial de ventas")
-    print("3. Salir")
+    print("1. 📝 Registrar una venta")
+    print("2. 📜 Ver historial de ventas (MySQL)")
+    print("3. 🚪 Salir")
     linea() 
 
-
-def despedida():
-    linea()
-    print("Gracias por utilizar el sistema.")
-    print("Sesion finalizada correctamente ✅")
-    linea()
-
 def main(): 
+    # 1. Verificamos la base de datos antes de empezar
+    crear_tabla_si_no_existe()
     mostrar_bienvenida()
 
     while True:
         mostrar_menu()
-        opcion = input("Seleccione una opcion:").strip()
+        opcion = input("Seleccione una opción: ").strip()
 
         if opcion == "1":
             limpiar_pantalla()
-            print("REGISTRO DE NUEVA VENTA")
+            print(">>> REGISTRO DE NUEVA VENTA")
             linea()
-            registrar_venta()
-            input("\nPresione Enter para volver al menu")
+            registrar_venta() # Esta función ahora guarda en MySQL internamente
+            input("\n✅ Presione Enter para volver al menú...")
             limpiar_pantalla()
         
         elif opcion == "2":
             limpiar_pantalla()
+            print(">>> HISTORIAL DE VENTAS DESDE MYSQL")
+            linea()
             mostrar_historial()
-            input("\nPresione Enter para volver al menu")
+            input("\n📖 Presione Enter para volver al menú...")
             limpiar_pantalla()
 
-           
-
         elif opcion == "3":
-                 despedida()
-                 break
+            linea()
+            print("Gracias por utilizar el sistema. ¡Sesión finalizada! ✅")
+            linea()
+            break
         else:
-            print("Opcion invalida. Intente nuevamente.\n")
+            print("❌ Opción inválida. Intente nuevamente.")
 
 if __name__ == "__main__":
      main()

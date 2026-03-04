@@ -4,39 +4,58 @@
 
 from src.utils.formato import formatear_moneda
 from src.models.ventas import Venta
-from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
+from src.features.validacion.validacion import (
+    calcular_subtotal, 
+    calcular_descuento_vip, 
+    calcular_total_final
+)
 from src.services.almacenamiento import guardar_venta_mysql
 
-
 def registrar_venta():
-    producto = input("Ingrese el nombre del producto:").strip()
-
-    try:
-        cantidad = int(input("Ingrese la cantidad:"))
-        precio = float(input("Ingrese el precio unitario:"))
-    except ValueError:
-        print("Error‼️ : Debe ingresar valores numericos validos.")
-        return
-    if cantidad <= 0 or precio <= 0:
-        print("Error‼️ : La cantidad y el precio deben ser mayores a 0.")
-        return 
+    """Bucle profesional para registrar varias ventas en una sesión."""
+    print("\n" + "="*20 + " SISTEMA DE VENTAS " + "="*20)
     
     while True:
-        vip_input = input("¿El cliente es VIP? si/no): ").strip().lower()
-        if vip_input in ["si", "no"]:
-            es_vip = vip_input == "si"
+        producto = input("\nIngrese el nombre del producto (o 'salir' para terminar): ").strip()
+        
+        if producto.lower() == 'salir':
+            print("\nFinalizando sesión de registro. ¡Hasta pronto!")
             break
-        else:
+
+        try:
+            cantidad = int(input("Ingrese la cantidad: "))
+            precio = float(input("Ingrese el precio unitario: "))
+        except ValueError:
+            print("Error‼️ : Debe ingresar valores numéricos válidos.")
+            continue # Reintenta el registro actual
+            
+        if cantidad <= 0 or precio <= 0:
+            print("Error‼️ : La cantidad y el precio deben ser mayores a 0.")
+            continue
+
+        # Validación VIP
+        while True:
+            vip_input = input("¿El cliente es VIP? (si/no): ").strip().lower()
+            if vip_input in ["si", "no"]:
+                es_vip = vip_input == "si"
+                break
             print("Error‼️ : Por favor ingrese 'si' o 'no'.")
 
-    venta = Venta(producto, cantidad, precio, es_vip)
-    guardar_venta_mysql(venta)  # Guardar la venta como un diccionario en el archivo JSON
-    venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
-    venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
-    venta.total = calcular_total_final(venta.subtotal, venta.descuento)
+        # 1. Crear el objeto Venta
+        venta = Venta(producto, cantidad, precio, es_vip)
 
-    mostrar_resumen_venta(venta)
+        # 2. Realizar cálculos ANTES de guardar (Para que MySQL tenga los totales)
+        venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
+        venta.descuento = calcular_descuento_vip(venta.subtotal, venta.es_vip)
+        venta.total = calcular_total_final(venta.subtotal, venta.descuento)
 
+        # 3. Guardar en MySQL
+        guardar_venta_mysql(venta) 
+        
+        # 4. Mostrar el resumen individual
+        mostrar_resumen_venta(venta)
+        
+        print("\n✅ Venta guardada en la base de datos.")
 
 def mostrar_resumen_venta(venta):
     print("\n" + "-" * 60)
@@ -51,7 +70,3 @@ def mostrar_resumen_venta(venta):
     print("-" * 60)
     print(f"TOTAL A PAGAR   : {formatear_moneda(venta.total)}")
     print("-" * 60)
-
-          
-         
-
