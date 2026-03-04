@@ -1,38 +1,25 @@
 import google.generativeai as genai
-import logging
 
 
-genai.configure(api_key="TUAIzaSyDLWSGh4UWYTwAl4S72HkgbMgc57moUOnE")
+genai.configure(api_key="AIzaSyDLWSGh4UWYTwAl4S72HkgbMgc57moUOnE")
 
-def obtener_analisis_ia(producto, precio, cantidad, ventas_del_dia):
+def obtener_analisis_ia(producto, precio, cantidad, ventas_hoy):
+   
+    modelos_a_probar = ['gemini-1.5-flash', 'gemini-1.5-flash-latest', 'gemini-pro']
     
-
-    try:
-
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        
-  
-        prompt = (
-            f"Analiza esta venta: {cantidad} de '{producto}' a ${precio}. "
-            f"Contexto: Hoy se han hecho {ventas_del_dia} ventas antes que esta. "
-            "Responde únicamente en este formato exacto separado por el símbolo '|': "
-            "Eslogan para cliente | Categoría del producto | Análisis técnico para el trabajador"
-        )
-        
+    for nombre_modelo in modelos_a_probar:
+        try:
+            model = genai.GenerativeModel(nombre_modelo)
+            prompt = f"Analiza: {cantidad} de '{producto}' a ${precio}. Responde: Eslogan | Categoría | Consejo"
+            response = model.generate_content(prompt)
+            
+            if response and response.text:
+                partes = response.text.split('|')
+                if len(partes) >= 3:
+                    return [p.strip() for p in partes]
+                return [response.text.strip(), "General", "Venta registrada"]
+        except Exception:
+            continue 
+            
     
-        response = model.generate_content(prompt)
-        
-        
-        resultado = response.text.split('|')
-        
-      
-        return [dato.strip() for dato in resultado]
-
-    except Exception as e:
-        
-        print(f"⚠️ Error al conectar con la IA: {e}")
-        return [
-            "¡Gracias por su compra!", 
-            "General", 
-            "Sin análisis disponible en este momento."
-        ]
+    return ["¡Gracias por su compra!", "General", "IA fuera de línea"]

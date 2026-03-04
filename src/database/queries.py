@@ -31,7 +31,7 @@ def obtener_dashboard_trabajador():
     sql = """
         SELECT COUNT(*), SUM(total) 
         FROM ventas 
-        WHERE DATE(fecha) = CURDATE()
+        WHERE DATE(fecha_registro) = CURDATE()
     """
     
     cursor.execute(sql)
