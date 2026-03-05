@@ -1,1 +1,12 @@
-mysql-connector-python==9.6.0
+# --- Librerías de Inteligencia Artificial ---
+google-generativeai
+
+# --- Librerías de Interfaz Gráfica Moderna ---
+customtkinter
+packaging
+
+# --- Conector de Base de Datos ---
+mysql-connector-python
+
+# --- Utilidades de Sistema ---
+python-dotenv

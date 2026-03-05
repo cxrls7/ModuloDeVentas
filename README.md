@@ -1,91 +1,51 @@
-# 📌 Registro Básico de Ventas Diarias
+# 📌 Sistema de Ventas Inteligente (IA + MySQL)
 
 ## 📖 Descripción
-Sistema básico para el registro y validación de ventas diarias.  
-Permite calcular el subtotal, aplicar descuento VIP del 10% y mostrar el total final de forma clara y legible.
-
+Sistema profesional desarrollado en Python para el registro y gestión de ventas comerciales. El software integra **Inteligencia Artificial (Google Gemini AI)** para el análisis técnico de operaciones y **MySQL** para el almacenamiento persistente de datos. La interfaz es moderna, intuitiva y está adaptada al mercado colombiano.
 
 ---
 
 ## 🎯 Objetivo
-Desarrollar una aplicación sencilla que permita:
-
-- Registrar ventas correctamente.
-- Calcular el subtotal (precio × cantidad).
-- Aplicar descuento VIP del 10%.
-- Calcular el total final.
-- Mostrar un resumen claro de la venta.
+Desarrollar una solución integral que permita:
+- **Gestión Visual:** Registro de transacciones mediante una interfaz gráfica avanzada.
+- **Análisis Técnico con IA:** Clasificación de productos y sugerencias operativas automáticas.
+- **Persistencia de Datos:** Control total del historial de ventas mediante base de datos.
+- **Optimización Local:** Formateo de moneda y reglas de negocio específicas para Colombia.
 
 ---
 
 ## 📐 Reglas de Negocio
-
-- **Subtotal = precio × cantidad**
-- **Descuento VIP = 10% del subtotal**
-- **Total Final = subtotal − descuento (si aplica)**
+- **Cálculo de Subtotal:** `precio × cantidad`.
+- **Descuento VIP:** Aplicación automática del 10% sobre el subtotal para clientes preferenciales.
+- **Formato de Moneda:** Implementación de puntos para miles y comas para decimales (Estándar COP).
+- **Análisis Funcional:** Evaluación de la venta por IA enfocada en rotación de inventario y acciones de negocio.
 
 ---
 
 ## ⚙️ Funcionalidades Implementadas
-
-- Registro de producto
-- Ingreso de cantidad y precio unitario
-- Validación de datos
-- Cálculo automático de subtotal
-- Aplicación de descuento VIP
-- Cálculo del total final
-- Visualización clara del resumen de venta
+- **Interfaz Gráfica Moderna (GUI):** Panel con pestañas dinámicas (Registro e Historial) usando `CustomTkinter`.
+- **Integración con Google Gemini:** Análisis en tiempo real de cada venta para generar resúmenes técnicos.
+- **Conectividad MySQL:** CRUD completo para el almacenamiento y recuperación de ventas.
+- **Procesamiento Asíncrono (Multithreading):** El sistema no se bloquea mientras espera la respuesta de la IA, mejorando la experiencia del usuario.
+- **Validación de Datos:** Control estricto de entradas numéricas para evitar errores de ejecución.
 
 ---
-
-## 🌿 Estrategia de Ramas (Git Flow Simplificado)
-
-- `main` → versión estable  
-- `develop` → integración de funcionalidades  
-- `feature/*` → desarrollo de nuevas funcionalidades  
-- `test/*` → prueba del programa
-
----
-
-## 🧪 Ejecutar pruebas
-
-Desde la raíz del proyecto ejecutar:
-
-```bash
-python3 -m unittest discover
-```
-
-Para ejecutar un archivo específico:
-
-```bash
-python3 -m unittest tests/test_validacion.py
-```
-
----
-
-## ✔️ Estado del proyecto
-
-- Tests implementados
-- Arquitectura por features
-- Separación de responsabilidades
-- Buenas prácticas aplicadas
-
----
-
 
 ## 🛠 Tecnologías
-  
-- Python  
-- Git  
-- GitHub  
-
----
-## Requerimientos
-
-- Tener instaladon python 3 para la ejecucion optima del programa.
+- **Lenguaje:** Python 3.12+
+- **Interfaz:** `CustomTkinter`
+- **IA:** `google-generativeai` (Gemini 1.5 Flash)
+- **Base de Datos:** `MySQL` con `mysql-connector`
+- **Control de Versiones:** Git / GitHub (Estrategia Git Flow)
 
 ---
 
-## AUTHOR
+## 📋 Requerimientos y Dependencias
+Para el correcto funcionamiento, es necesario tener instaladas las librerías listadas en `requirements.txt`:
 
-- Carlos Daniel Molina Ordoñez.
+
+pip install -r requirements.txt
+
+---
+## 👤 Autor
+Carlos Daniel Molina Ordoñez
