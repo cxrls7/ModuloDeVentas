@@ -6,6 +6,17 @@ from src.features.registro.registro import registrar_venta
 from src.features.historial.historial import mostrar_historial
 from src.database.queries import obtener_dashboard_trabajador
 from src.utils.decorators import manejador_global
+from src.gui.app import AppVentas
+
+ 
+def main():
+    print("🚀 Iniciando Interfaz Gráfica...")
+    app = AppVentas()
+    app.mainloop()
+
+if __name__ == "__main__":
+    main()
+
 
 def crear_tabla_si_no_existe():
     conexion = obtener_conexion()
