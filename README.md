@@ -31,29 +31,21 @@ Desarrollar una solución integral que permita:
 
 ---
 
-## ✔️ Estado del proyecto
-
-- Tests implementados
-- Arquitectura por features
-- Separación de responsabilidades
-- Buenas prácticas aplicadas
-
----
-
-
 ## 🛠 Tecnologías
-  
-- Python  
-- Git  
-- GitHub  
-
----
-## Requerimientos
-
-- Tener instaladom python 3 para la ejecucion optima del programa.
+- **Lenguaje:** Python 3.12+
+- **Interfaz:** `CustomTkinter`
+- **IA:** `google-generativeai` (Gemini 1.5 Flash)
+- **Base de Datos:** `MySQL` con `mysql-connector`
+- **Control de Versiones:** Git / GitHub (Estrategia Git Flow)
 
 ---
 
-## AUTHOR
+## 📋 Requerimientos y Dependencias
+Para el correcto funcionamiento, es necesario tener instaladas las librerías listadas en `requirements.txt`:
 
-- Carlos Daniel Molina Ordoñez.
+
+pip install -r requirements.txt
+
+---
+## 👤 Autor
+Carlos Daniel Molina Ordoñez
