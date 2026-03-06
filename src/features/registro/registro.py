@@ -2,55 +2,75 @@
 #Importe las funciones necesarias para el registro de ventas y los cálculos relacionados
 #Importe tambien la clase venta para crear objetos de venta y almacenar los detalles de cada transacción
 
-
+from src.utils.formato import formatear_moneda
 from src.models.ventas import Venta
-from src.features.validacion.validacion import(calcular_subtotal,calcular_descuento_vip,calcular_total_final)
-
+from src.features.validacion.validacion import (
+    calcular_subtotal, 
+    calcular_descuento_vip, 
+    calcular_total_final
+)
+from src.services.almacenamiento import guardar_venta_mysql
+from src.services.ai_service import obtener_analisis_ia
 
 def registrar_venta():
-    producto = input("Ingrese el nombre del producto:").strip()
+    print("\n" + "═"*20 + " REGISTRO DE VENTA " + "═"*20)
+    
+   
+    producto = input("📦 Nombre del producto: ").strip()
+    if not producto:
+        print("❌ El nombre no puede estar vacío.")
+        return
 
     try:
-        cantidad = int(input("Ingrese la cantidad:"))
-        precio = float(input("Ingrese el precio unitario:"))
+        cantidad = int(input("🔢 Cantidad: "))
+        precio = float(input("💰 Precio Unitario: "))
+        if cantidad <= 0 or precio <= 0:
+            print("❌ Los valores deben ser mayores a cero.")
+            return
     except ValueError:
-        print("Error‼️: Debe ingresar valores numericos validos.")
+        print("❌ Error: Ingrese solo números para cantidad y precio.")
         return
-    if cantidad <= 0 or precio <= 0:
-        print("Error‼️: La cantidad y el precio deben ser mayores a 0.")
-        return 
+
+    es_vip = input("🌟 ¿Es cliente VIP? (si/no): ").strip().lower() == "si"
+
     
-    while True:
-        vip_input = input("¿El cliente es VIP? si/no)").strip().lower()
-        if vip_input in ["si", "no"]:
-            es_vip = vip_input == "si"
-            break
-        else:
-            print("Error‼️: Por favor ingrese 'si' o 'no'.")
+    sub_calc = calcular_subtotal(precio, cantidad)
+    desc_calc = calcular_descuento_vip(sub_calc, es_vip)
+    total_calc = calcular_total_final(sub_calc, desc_calc)
 
-    venta = venta(producto, cantidad, precio, es_vip)
+   
+    print("🧠 Consultando cerebro de IA...") 
+    res_ia = obtener_analisis_ia(producto, precio, cantidad, 0)
 
-    venta.subtotal = calcular_subtotal(venta.precio_unitario, venta.cantidad)
-    venta.descuento = calcular_descuento_vip(venta.subtotal , venta.es_vip)
-    venta.total = calcular_total_final(venta.subtotal, venta.descuento)
+    
+    nueva_venta = Venta(
+        producto=producto,
+        cantidad=cantidad,
+        precio_unitario=precio,
+        es_vip=es_vip,
+        subtotal=sub_calc,      
+        descuento=desc_calc,   
+        total=total_calc,       
+        eslogan_ia=res_ia[0],
+        feedback_interno=res_ia[2]
+    )
 
-    mostrar_resumen_venta(venta)
+   
+    guardar_venta_mysql(nueva_venta)
 
+  
+    mostrar_ticket(nueva_venta)
 
-def mostrar_resumen_venta(venta):
-    print("\n" + "-" * 60) 
-    print ("             RESUMEN DE LA VENTA")
-    print("-" * 60) 
-    print(f"Producto        : {venta.producto}")
-    print(f"Cantidad        : {venta.cantidad}")
-    print(f"Precio Unitario : ${venta.precio_unitario:.2f}") 
-    print("-" * 60)
-    print(f"Subtotal        : ${venta.subtotal:.2f}")
-    print(f"Descuento VIP   : ${venta.descuento:.2f}")
-    print("-" * 60)
-    print(f"TOTAL A PAGAR   : ${venta.total:.2f}")
-    print("-" * 60)
-
-          
-         
-
+def mostrar_ticket(venta):
+    print("\n" + "─"*40)
+    print(f"       RESUMEN DE OPERACIÓN")
+    print("─"*40)
+    print(f" ARTÍCULO : {venta.producto.upper()}")
+    print(f" CATEGORÍA: {venta.categoria}")
+    print(f" CANTIDAD : {venta.cantidad}")
+    print(f" SUBTOTAL : {formatear_moneda(venta.subtotal)}")
+    print(f" DESC. VIP: -{formatear_moneda(venta.descuento)}")
+    print(f" TOTAL    : {formatear_moneda(venta.total)}")
+    print("─"*40)
+    print(f" 📣 IA: \"{venta.eslogan_ia}\"")
+    print("─"*40 + "\n")

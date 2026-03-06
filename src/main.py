@@ -1,70 +1,127 @@
 # Archivo principal del sistema de registro de ventas diarias
 # Este archivo contiene la función principal que inicia el programa, muestra el menú de opciones y maneja la interacción con el usuario.
-
-from src.features.registro.registro import registrar_venta
 import os
+from src.database.conexion_mysql import obtener_conexion 
+from src.features.registro.registro import registrar_venta
+from src.features.historial.historial import mostrar_historial
+from src.database.queries import obtener_dashboard_trabajador
+from src.utils.decorators import manejador_global
+from src.gui.app import AppVentas
 
+ 
+def main():
+    print("🚀 Iniciando Interfaz Gráfica...")
+    app = AppVentas()
+    app.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+def crear_tabla_si_no_existe():
+    conexion = obtener_conexion()
+    if conexion:
+        try:
+            cursor = conexion.cursor()
+            # Actualizado para incluir las columnas de la IA
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS ventas (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    producto VARCHAR(100) NOT NULL,
+                    cantidad INT NOT NULL,
+                    precio_unitario DECIMAL(12, 2) NOT NULL,
+                    es_vip BOOLEAN DEFAULT FALSE,
+                    subtotal DECIMAL(12, 2),
+                    descuento DECIMAL(12, 2),
+                    total DECIMAL(12, 2),
+                    categoria VARCHAR(50),
+                    eslogan_ia TEXT,
+                    feedback_interno TEXT,
+                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conexion.commit()
+        finally:
+            cursor.close()
+            conexion.close()
 
 def limpiar_pantalla():
-    os.system("clear") 
+    os.system("clear" if os.name == "posix" else "cls") 
 
 def linea():
     print("=" * 60)
 
-
 def mostrar_bienvenida():
+    limpiar_pantalla()
     linea()
-    print("---SISTEMA DE REGISTRO DE VENTAS DIARIAS---")
+    print("      --- SISTEMA DE GESTIÓN DE VENTAS ---")
     linea()
-    print("Bienvenido 👋")
-    print("Este sitema permite registrar las ventas diarias de tu negocio de manera sencilla y eficiente.")
-    print("Podrás ingresar los detalles de cada venta, calcular descuentos para clientes VIP")
-    print("y obtener un resumen claro de cada transacción.")
+    print("Bienvenido al sistema de gestion de ventas 👋 ")
     linea()
-    print("EJEMPLO DE USO:")
-    print("Producta: Camisa")
-    print("Cantidad: 3")
-    print("Precio unitario: $25.000")
-    print("¿El cliente es VIP? si/no")
-    linea()
-
 
 def mostrar_menu():
-    print("\nMENU PRINCIPAL")
+    print("\n📦 MENU PRINCIPAL")
     linea()
-    print("1. Registrar una venta")
-    print("2. Salir")
+    print("1. 📝 Registrar una venta ")
+    print("2. 📜 Ver historial de ventas (MySQL)")
+    print("3. 📊 Panel de Control")
+    print("4. 🚪 Salir")
     linea() 
 
 
-def despedida():
+def ejecutar_dashboard():
+    limpiar_pantalla()
+    print(">>> PANEL DE CONTROL DEL TRABAJADOR")
     linea()
-    print("Gracias por utilizar el sistema.")
-    print("Sesion finalizada correctamente ✅")
+    
+    ventas_hoy, ganancia_hoy = obtener_dashboard_trabajador()
+    
+    
+    total_dinero = ganancia_hoy if ganancia_hoy else 0.0
+    
+    print(f"📈 Ventas realizadas hoy: {ventas_hoy}")
+    print(f"💰 Recaudación total:     ${total_dinero:.2f}")
     linea()
+    print("Consejo: Revisa el log de errores si notas discrepancias.")
+    input("\n✅ Presione Enter para volver al menú...")
+    limpiar_pantalla()
 
 def main(): 
+    crear_tabla_si_no_existe()
     mostrar_bienvenida()
 
     while True:
         mostrar_menu()
-        opcion = input("Seleccione una opcion:").strip()
+        opcion = input("Seleccione una opción: ").strip()
 
         if opcion == "1":
             limpiar_pantalla()
-            print("REGISTRO DE NUEVA VENTA")
+            print(">>> REGISTRO DE NUEVA VENTA")
             linea()
-            registrar_venta()
-            input("\nPresione Enter para volver al menu")
+          
+            registrar_venta() 
+            input("\n✅ Presione Enter para volver al menú...")
+            limpiar_pantalla()
+        
+        elif opcion == "2":
+            limpiar_pantalla()
+            print(">>> HISTORIAL DE VENTAS DESDE MYSQL")
+            linea()
+            mostrar_historial()
+            input("\n📖 Presione Enter para volver al menú...")
             limpiar_pantalla()
 
-        elif opcion == "2":
-                 despedida()
-                 break
+        elif opcion == "3":
+            ejecutar_dashboard()
+
+        elif opcion == "4":
+            linea()
+            print("Gracias por utilizar el sistema. ¡Sesión finalizada! ✅")
+            linea()
+            break
         else:
-            print("Opcion invalida. Intente nuevamente.\n")
+            print("❌ Opción inválida. Intente nuevamente.")
 
 if __name__ == "__main__":
      main()
-     
      
